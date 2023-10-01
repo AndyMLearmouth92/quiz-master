@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-// import { useEffect } from "react";
+import { useState } from "react";
 
 const questions = [
   {
@@ -41,6 +41,11 @@ const questions = [
 ];
 
 function App() {
+  const [questionNumber, setQuestionNumber] = useState(0);
+  const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
+  console.log(numCorrectAnswers);
+
+  const currentQuestion = questions[questionNumber];
   // useEffect(() => {
   //   function getQuestions() {
   //     //Use template literal to change the number of questions and the difficulty
@@ -65,11 +70,13 @@ function App() {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-lg">
-            {questions.map((question) => {
-              return (
-                <QAContainer question={question} key={question.questionText} />
-              );
-            })}
+            <QAContainer
+              currentQuestion={currentQuestion}
+              key={currentQuestion.questionText}
+              setQuestionNumber={setQuestionNumber}
+              setNumCorrectAnswers={setNumCorrectAnswers}
+            />
+
             {/* <h1 className="mb-5 text-5xl font-bold">Hello there</h1> */}
             {/* <p className="mb-5">
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
@@ -84,7 +91,12 @@ function App() {
   );
 }
 
-function QAContainer({ question }) {
+function QAContainer({
+  currentQuestion,
+  setQuestionNumber,
+  setNumCorrectAnswers,
+}) {
+  console.log(currentQuestion);
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl">
       <figure>
@@ -94,10 +106,17 @@ function QAContainer({ question }) {
         /> */}
       </figure>
       <div className="card-body">
-        <Question question={question} key={question.questionText} />
+        <Question currentQuestion={currentQuestion} />
         <div className="card-actions justify-end">
-          {question.answerOptions.map((answer) => {
-            return <AnswerButton answer={answer} key={answer.answerText} />;
+          {currentQuestion.answerOptions.map((answer) => {
+            return (
+              <AnswerButton
+                answer={answer}
+                key={answer.answerText}
+                setQuestionNumber={setQuestionNumber}
+                setNumCorrectAnswers={setNumCorrectAnswers}
+              />
+            );
           })}
         </div>
       </div>
@@ -105,13 +124,23 @@ function QAContainer({ question }) {
   );
 }
 
-function Question({ question }) {
-  return <h2 className="card-title">{question.questionText}</h2>;
+function Question({ currentQuestion }) {
+  return <h2 className="card-title">{currentQuestion.questionText}</h2>;
 }
 
-function AnswerButton({ answer }) {
+function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
+  function handleClick() {
+    console.log(answer.isCorrect);
+    setQuestionNumber((qn) => qn + 1);
+    if (answer.isCorrect) {
+      setNumCorrectAnswers((a) => a + 1);
+    }
+  }
+
   return (
-    <button className="btn btn-active btn-primary">{answer.answerText}</button>
+    <button className="btn btn-active btn-primary" onClick={handleClick}>
+      {answer.answerText}
+    </button>
   );
 }
 
