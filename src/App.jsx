@@ -42,6 +42,7 @@ const questions = [
 
 function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
+  console.log(questionNumber);
   const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
   console.log(numCorrectAnswers);
 
@@ -68,11 +69,12 @@ function App() {
         style={{ backgroundImage: "url(public/images/quizBackground.png)" }}
       >
         <div className="hero-overlay bg-opacity-60"></div>
-        <div className="hero-content text-center text-neutral-content">
-          <div className="max-w-lg">
+        <div className="hero-content text-center text-neutral-content min-h-full min-w-full">
+          <div className="max-w-xl">
             <QAContainer
               currentQuestion={currentQuestion}
               key={currentQuestion.questionText}
+              questionNumber={questionNumber}
               setQuestionNumber={setQuestionNumber}
               setNumCorrectAnswers={setNumCorrectAnswers}
             />
@@ -95,37 +97,51 @@ function QAContainer({
   currentQuestion,
   setQuestionNumber,
   setNumCorrectAnswers,
+  questionNumber,
 }) {
   console.log(currentQuestion);
   return (
-    <div className="card lg:card-side bg-base-100 shadow-xl">
+    <div className="card lg:card-side bg-base-100 shadow-xl h-80 flex bg-slate-600">
       <figure>
         {/* <img
           src="/images/stock/photo-1494232410401-ad00d5433cfa.jpg"
           alt="Album"
         /> */}
       </figure>
-      <div className="card-body">
-        <Question currentQuestion={currentQuestion} />
-        <div className="card-actions justify-end">
-          {currentQuestion.answerOptions.map((answer) => {
-            return (
-              <AnswerButton
-                answer={answer}
-                key={answer.answerText}
-                setQuestionNumber={setQuestionNumber}
-                setNumCorrectAnswers={setNumCorrectAnswers}
-              />
-            );
-          })}
+      <div className="card-body flex">
+        <Question
+          currentQuestion={currentQuestion}
+          questionNumber={questionNumber}
+        />
+        <div className="justify-center ">
+          <div className="">
+            {currentQuestion.answerOptions.map((answer) => {
+              return (
+                <AnswerButton
+                  answer={answer}
+                  key={answer.answerText}
+                  setQuestionNumber={setQuestionNumber}
+                  setNumCorrectAnswers={setNumCorrectAnswers}
+                  className=""
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function Question({ currentQuestion }) {
-  return <h2 className="card-title">{currentQuestion.questionText}</h2>;
+function Question({ currentQuestion, questionNumber }) {
+  return (
+    <div className="mb-4">
+      <h1 className="text-4xl mb-8">
+        Question {questionNumber + 1} of {questions.length}
+      </h1>
+      <h2 className="text-2xl">{currentQuestion.questionText}</h2>
+    </div>
+  );
 }
 
 function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
@@ -138,7 +154,10 @@ function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
   }
 
   return (
-    <button className="btn btn-active btn-primary" onClick={handleClick}>
+    <button
+      className="btn btn-neutral btn-primary w-52 m-2 btn-answer"
+      onClick={handleClick}
+    >
       {answer.answerText}
     </button>
   );
