@@ -71,13 +71,18 @@ function App() {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content min-h-full min-w-full">
           <div className="max-w-xl">
-            <QAContainer
-              currentQuestion={currentQuestion}
-              key={currentQuestion.questionText}
-              questionNumber={questionNumber}
-              setQuestionNumber={setQuestionNumber}
-              setNumCorrectAnswers={setNumCorrectAnswers}
-            />
+            {questionNumber <= questions.length && currentQuestion ? (
+              <QAContainer
+                currentQuestion={currentQuestion}
+                key={currentQuestion.questionText}
+                questionNumber={questionNumber}
+                setQuestionNumber={setQuestionNumber}
+                setNumCorrectAnswers={setNumCorrectAnswers}
+                numCorrectAnswers={numCorrectAnswers}
+              />
+            ) : (
+              <Result numCorrectAnswers={numCorrectAnswers} />
+            )}
 
             {/* <h1 className="mb-5 text-5xl font-bold">Hello there</h1> */}
             {/* <p className="mb-5">
@@ -102,12 +107,6 @@ function QAContainer({
   console.log(currentQuestion);
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl h-80 flex bg-slate-600">
-      <figure>
-        {/* <img
-          src="/images/stock/photo-1494232410401-ad00d5433cfa.jpg"
-          alt="Album"
-        /> */}
-      </figure>
       <div className="card-body flex">
         <Question
           currentQuestion={currentQuestion}
@@ -160,6 +159,21 @@ function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
     >
       {answer.answerText}
     </button>
+  );
+}
+
+function Result({ numCorrectAnswers }) {
+  return (
+    <div className="card lg:card-side bg-base-100 shadow-xl h-80 flex bg-slate-600">
+      <div className="card-body flex">
+        <h1 className="text-4xl mb-8">
+          Well done you scored {numCorrectAnswers} / {questions.length}!
+        </h1>
+        <div className="justify-center ">
+          <div className=""></div>
+        </div>
+      </div>
+    </div>
   );
 }
 
