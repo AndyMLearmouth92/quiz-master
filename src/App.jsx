@@ -73,7 +73,7 @@ function QAContainer({
 }) {
   console.log(currentQuestion);
   return (
-    <div className="card lg:card-side bg-base-100 shadow-xl h-80 flex bg-slate-600">
+    <div className="card lg:card-side bg-base-100 shadow-xl h-3/5 flex bg-slate-600">
       <div className="card-body flex">
         <Question
           currentQuestion={currentQuestion}
@@ -122,7 +122,7 @@ function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
 
   return (
     <button
-      className="btn btn-neutral btn-primary w-52 m-2 btn-answer"
+      className="btn btn-neutral btn-primary w-52 m-2 btn-answer w-96"
       onClick={handleClick}
     >
       {answer.answerText}

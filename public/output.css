@@ -1263,6 +1263,27 @@ html {
   height: 20rem;
 }
 
+.h-96 {
+  height: 24rem;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.h-max {
+  height: -moz-max-content;
+  height: max-content;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.h-3\/5 {
+  height: 60%;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -1273,6 +1294,19 @@ html {
 
 .w-52 {
   width: 13rem;
+}
+
+.w-96 {
+  width: 24rem;
+}
+
+.w-max {
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.w-3\/5 {
+  width: 60%;
 }
 
 .min-w-full {
@@ -1295,6 +1329,11 @@ html {
 .bg-slate-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+}
+
+.bg-slate-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-60 {
