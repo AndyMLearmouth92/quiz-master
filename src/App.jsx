@@ -1,66 +1,29 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-
-const questions = [
-  {
-    questionText: "What is the capital of France?",
-    answerOptions: [
-      { answerText: "New York", isCorrect: false },
-      { answerText: "London", isCorrect: false },
-      { answerText: "Paris", isCorrect: true },
-      { answerText: "Dublin", isCorrect: false },
-    ],
-  },
-  {
-    questionText: "Who is CEO of Tesla?",
-    answerOptions: [
-      { answerText: "Jeff Bezos", isCorrect: false },
-      { answerText: "Elon Musk", isCorrect: true },
-      { answerText: "Bill Gates", isCorrect: false },
-      { answerText: "Tony Stark", isCorrect: false },
-    ],
-  },
-  {
-    questionText: "The iPhone was created by which company?",
-    answerOptions: [
-      { answerText: "Apple", isCorrect: true },
-      { answerText: "Intel", isCorrect: false },
-      { answerText: "Amazon", isCorrect: false },
-      { answerText: "Microsoft", isCorrect: false },
-    ],
-  },
-  {
-    questionText: "How many Harry Potter books are there?",
-    answerOptions: [
-      { answerText: "1", isCorrect: false },
-      { answerText: "4", isCorrect: false },
-      { answerText: "6", isCorrect: false },
-      { answerText: "7", isCorrect: true },
-    ],
-  },
-];
+import { useState, useEffect } from "react";
 
 function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
   console.log(questionNumber);
   const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
   console.log(numCorrectAnswers);
+  const [quiz, setQuiz] = useState([]);
 
-  const currentQuestion = questions[questionNumber];
-  // useEffect(() => {
-  //   function getQuestions() {
-  //     //Use template literal to change the number of questions and the difficulty
-  //     fetch(`https://opentdb.com/api.php?amount=10&type=multiple`)
-  //       .then((res) => res.json()) // parse response as JSON
-  //       .then((data) => {
-  //         console.log(data.results[0]);
-  //       })
-  //       .catch((err) => {
-  //         console.log(`error ${err}`);
-  //       });
-  //   }
-  //   getQuestions();
-  // }, []);
+  console.log(quiz);
+  const currentQuestion = quiz[questionNumber];
+  useEffect(() => {
+    function getQuestions() {
+      fetch("https://quiz-master-data.cyclic.cloud/questions")
+        .then((res) => res.json()) // parse response as JSON
+        .then((data) => {
+          console.log(data);
+          setQuiz(data);
+        })
+        .catch((err) => {
+          console.log(`error ${err}`);
+        });
+    }
+    getQuestions();
+  }, []);
 
   return (
     <div>
@@ -71,17 +34,19 @@ function App() {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content min-h-full min-w-full">
           <div className="max-w-xl">
-            {questionNumber <= questions.length && currentQuestion ? (
+            {questionNumber <= quiz.length && currentQuestion ? (
               <QAContainer
                 currentQuestion={currentQuestion}
-                key={currentQuestion.questionText}
+                key={currentQuestion.question}
                 questionNumber={questionNumber}
                 setQuestionNumber={setQuestionNumber}
                 setNumCorrectAnswers={setNumCorrectAnswers}
                 numCorrectAnswers={numCorrectAnswers}
+                answerOptions={currentQuestion.answerOptions}
+                quizLength={quiz.length}
               />
             ) : (
-              <Result numCorrectAnswers={numCorrectAnswers} />
+              <Result numCorrectAnswers={numCorrectAnswers} quiz={quiz} />
             )}
 
             {/* <h1 className="mb-5 text-5xl font-bold">Hello there</h1> */}
@@ -103,6 +68,8 @@ function QAContainer({
   setQuestionNumber,
   setNumCorrectAnswers,
   questionNumber,
+  answerOptions,
+  quizLength,
 }) {
   console.log(currentQuestion);
   return (
@@ -111,10 +78,11 @@ function QAContainer({
         <Question
           currentQuestion={currentQuestion}
           questionNumber={questionNumber}
+          quizLength={quizLength}
         />
         <div className="justify-center ">
           <div className="">
-            {currentQuestion.answerOptions.map((answer) => {
+            {answerOptions.map((answer) => {
               return (
                 <AnswerButton
                   answer={answer}
@@ -132,11 +100,11 @@ function QAContainer({
   );
 }
 
-function Question({ currentQuestion, questionNumber }) {
+function Question({ currentQuestion, questionNumber, quizLength }) {
   return (
     <div className="mb-4">
       <h1 className="text-4xl mb-8">
-        Question {questionNumber + 1} of {questions.length}
+        Question {questionNumber + 1} of {quizLength}
       </h1>
       <h2 className="text-2xl">{currentQuestion.questionText}</h2>
     </div>
@@ -162,12 +130,12 @@ function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
   );
 }
 
-function Result({ numCorrectAnswers }) {
+function Result({ numCorrectAnswers, quiz }) {
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl h-80 flex bg-slate-600">
       <div className="card-body flex">
         <h1 className="text-4xl mb-8">
-          Well done you scored {numCorrectAnswers} / {questions.length}!
+          Well done you scored {numCorrectAnswers} / {quiz.length}!
         </h1>
         <div className="justify-center ">
           <div className=""></div>
