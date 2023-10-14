@@ -7,12 +7,14 @@ function App() {
   const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
   console.log(numCorrectAnswers);
   const [quiz, setQuiz] = useState([]);
+  const [welcome, setWelcome] = useState(true)
+  const [apiRequest, setApiRequest] = useState(10)
 
   console.log(quiz);
   const currentQuestion = quiz[questionNumber];
   useEffect(() => {
     function getQuestions() {
-      fetch("https://quiz-master-data.cyclic.cloud/questions")
+      fetch(`https://quiz-master-data.cyclic.cloud/questions/${apiRequest}`)
         .then((res) => res.json()) // parse response as JSON
         .then((data) => {
           console.log(data);
@@ -23,7 +25,7 @@ function App() {
         });
     }
     getQuestions();
-  }, []);
+  }, [apiRequest]);
 
   return (
     <div>
@@ -34,7 +36,10 @@ function App() {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content min-h-full min-w-full">
           <div className="max-w-xl">
-            {questionNumber <= quiz.length && currentQuestion ? (
+            {welcome && (
+            <NumOfQuestions welcome={welcome} setApiRequest={setApiRequest} setWelcome={setWelcome}/>
+            )}
+            {!welcome && (questionNumber <= quiz.length && currentQuestion ? (
               <QAContainer
                 currentQuestion={currentQuestion}
                 key={currentQuestion.question}
@@ -47,19 +52,46 @@ function App() {
               />
             ) : (
               <Result numCorrectAnswers={numCorrectAnswers} quiz={quiz} />
-            )}
-
-            {/* <h1 className="mb-5 text-5xl font-bold">Hello there</h1> */}
-            {/* <p className="mb-5">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p> */}
-            {/* <button className="btn btn-primary">Get Started</button> */}
+            ))}
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function NumOfQuestions({setApiRequest, setWelcome}){
+  return (
+    <div className="card lg:card-side bg-base-100 shadow-xl h-3/5 flex bg-slate-600">
+      <div className="card-body flex">
+        <div className="mb-4">
+          <h1 className="text-4xl mb-8">Welcome to Quiz Master </h1>
+          <h2 className="text-2xl">How many questions would you like to do?</h2>
+        </div>
+      <div className="justify-center ">
+        <div className="">
+        <QuestionNumSelection setApiRequest={setApiRequest} setWelcome={setWelcome}>10</QuestionNumSelection>
+        <QuestionNumSelection setApiRequest={setApiRequest} setWelcome={setWelcome}>20</QuestionNumSelection>
+        </div>
+    </div>
+    </div>
+    </div>
+  );
+}
+
+function QuestionNumSelection({children, setApiRequest, setWelcome={setWelcome}}) {
+  function handleClick(){
+    setApiRequest(children)
+    setWelcome(false);
+  }
+
+  return (
+    <button
+      className="btn btn-neutral btn-primary w-52 m-2 btn-answer w-96"
+      onClick={handleClick}
+    >
+      {children}
+    </button>
   );
 }
 
