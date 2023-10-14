@@ -163,15 +163,20 @@ function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
 }
 
 function Result({ numCorrectAnswers, quiz }) {
+function handleClick(){
+  window.location.reload();
+}
+
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl h-80 flex bg-slate-600">
       <div className="card-body flex">
         <h1 className="text-4xl mb-8">
           Well done you scored {numCorrectAnswers} / {quiz.length}!
         </h1>
-        <div className="justify-center ">
-          <div className=""></div>
-        </div>
+        <button className="btn btn-neutral btn-primary w-52 m-2 btn-answer w-96"
+      onClick={handleClick}>
+     Restart Quiz
+    </button>
       </div>
     </div>
   );
