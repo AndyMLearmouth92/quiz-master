@@ -65,15 +65,15 @@ function NumOfQuestions({setApiRequest, setWelcome}){
     <div className="card lg:card-side bg-base-100 shadow-xl h-3/5 flex bg-slate-600">
       <div className="card-body flex">
         <div className="mb-4">
-          <h1 className="text-4xl mb-8">Welcome to Quiz Master </h1>
-          <h2 className="text-2xl">How many questions would you like to do?</h2>
+          <h1 className="text-5xl mb-8">Welcome to Quiz Master </h1>
+          <h2 className="text-3xl">How many questions would you like to do?</h2>
         </div>
-      <div className="justify-center ">
+      <div className="justify-center">
         <div className="">
-        <QuestionNumSelection setApiRequest={setApiRequest} setWelcome={setWelcome}>10</QuestionNumSelection>
-        <QuestionNumSelection setApiRequest={setApiRequest} setWelcome={setWelcome}>20</QuestionNumSelection>
+          <QuestionNumSelection setApiRequest={setApiRequest} setWelcome={setWelcome}>10</QuestionNumSelection>
+          <QuestionNumSelection setApiRequest={setApiRequest} setWelcome={setWelcome}>20</QuestionNumSelection>
         </div>
-    </div>
+      </div>
     </div>
     </div>
   );
@@ -87,7 +87,7 @@ function QuestionNumSelection({children, setApiRequest, setWelcome={setWelcome}}
 
   return (
     <button
-      className="btn btn-neutral btn-primary w-52 m-2 btn-answer w-96"
+      className="btn btn-neutral btn-primary m-2 btn-answer w-11/12 h-14 text-xl"
       onClick={handleClick}
     >
       {children}
@@ -135,17 +135,16 @@ function QAContainer({
 function Question({ currentQuestion, questionNumber, quizLength }) {
   return (
     <div className="mb-4">
-      <h1 className="text-4xl mb-8">
+      <h1 className="text-5xl mb-8">
         Question {questionNumber + 1} of {quizLength}
       </h1>
-      <h2 className="text-2xl">{currentQuestion.questionText}</h2>
+      <h2 className="text-3xl">{currentQuestion.questionText}</h2>
     </div>
   );
 }
 
 function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
   function handleClick() {
-    console.log(answer.isCorrect);
     setQuestionNumber((qn) => qn + 1);
     if (answer.isCorrect) {
       setNumCorrectAnswers((a) => a + 1);
@@ -154,7 +153,7 @@ function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
 
   return (
     <button
-      className="btn btn-neutral btn-primary w-52 m-2 btn-answer w-96"
+      className="btn btn-neutral btn-primary m-2 btn-answer w-11/12 h-14 text-xl"
       onClick={handleClick}
     >
       {answer.answerText}
@@ -163,20 +162,22 @@ function AnswerButton({ answer, setQuestionNumber, setNumCorrectAnswers }) {
 }
 
 function Result({ numCorrectAnswers, quiz }) {
-function handleClick(){
-  window.location.reload();
+  function handleClick(){
+    window.location.reload();
 }
 
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl h-80 flex bg-slate-600">
       <div className="card-body flex">
-        <h1 className="text-4xl mb-8">
+        <h1 className="text-5xl mb-8">
           Well done you scored {numCorrectAnswers} / {quiz.length}!
         </h1>
-        <button className="btn btn-neutral btn-primary w-52 m-2 btn-answer w-96"
-      onClick={handleClick}>
-     Restart Quiz
-    </button>
+        <div>
+          <button className="btn btn-neutral btn-primary m-2 btn-answer w-11/12 h-14 text-xl"
+            onClick={handleClick}>
+            Restart Quiz
+          </button>
+        </div>
       </div>
     </div>
   );
