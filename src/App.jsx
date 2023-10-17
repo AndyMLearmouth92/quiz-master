@@ -31,7 +31,7 @@ function App() {
     <div>
       <div
         className="hero min-h-screen"
-        style={{ backgroundImage: "url(public/images/quizBackground.png)" }}
+        style={{ backgroundImage: "url(images/quizBackground.png)" }}
       >
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content min-h-full min-w-full">
