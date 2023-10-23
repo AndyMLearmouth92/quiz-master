@@ -1,7 +1,7 @@
-export default function QuestionNumSelection({children, setApiRequest, setWelcome}) {
+export default function QuestionNumSelection({children, setApiRequest, setStage}) {
     function handleClick(){
       setApiRequest(children)
-      setWelcome(false);
+      setStage(2);
     }
   
     return (

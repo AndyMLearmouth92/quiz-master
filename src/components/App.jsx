@@ -8,7 +8,7 @@ function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
   const [quiz, setQuiz] = useState([]);
-  const [welcome, setWelcome] = useState(true)
+  const [stage, setStage] = useState(1)
   const [apiRequest, setApiRequest] = useState(10)
   const currentQuestion = quiz[questionNumber];
   
@@ -26,6 +26,13 @@ function App() {
     getQuestions();
   }, [apiRequest]);
 
+  //Sets stage to 3
+  useEffect(() => {
+    if(quiz.length > 0 && questionNumber === quiz.length){
+      setStage(3)
+    }
+  }, [questionNumber]);
+
   return (
     <div>
       <div
@@ -35,10 +42,10 @@ function App() {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content min-h-full min-w-full">
           <div className="max-w-xl">
-            {welcome && (
-            <NumOfQuestions welcome={welcome} setApiRequest={setApiRequest} setWelcome={setWelcome}/>
+            {stage === 1 && (
+            <NumOfQuestions setApiRequest={setApiRequest} setStage={setStage}/>
             )}
-            {!welcome && (questionNumber <= quiz.length && currentQuestion ? (
+            {stage === 2 && currentQuestion && (
               <QAContainer
                 currentQuestion={currentQuestion}
                 key={currentQuestion.question}
@@ -49,9 +56,10 @@ function App() {
                 answerOptions={currentQuestion.answerOptions}
                 quizLength={quiz.length}
               />
-            ) : (
+            )}
+            {stage === 3 && (
               <Result numCorrectAnswers={numCorrectAnswers} quiz={quiz} />
-            ))}
+            )}
           </div>
         </div>
       </div>

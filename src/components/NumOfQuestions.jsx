@@ -1,6 +1,6 @@
 import QuestionNumSelection from "./QuestionNumSelection"
 
-export default function NumOfQuestions({ setApiRequest, setWelcome}){
+export default function NumOfQuestions({ setApiRequest, setStage}){
     return (
       <div className="card lg:card-side bg-base-100 shadow-xl h-3/5 flex bg-slate-600">
         <div className="card-body flex">
@@ -10,8 +10,8 @@ export default function NumOfQuestions({ setApiRequest, setWelcome}){
           </div>
         <div className="justify-center">
           <div className="">
-            <QuestionNumSelection setApiRequest={setApiRequest} setWelcome={setWelcome}>10</QuestionNumSelection>
-            <QuestionNumSelection setApiRequest={setApiRequest} setWelcome={setWelcome}>20</QuestionNumSelection>
+            <QuestionNumSelection setApiRequest={setApiRequest} setStage={setStage}>10</QuestionNumSelection>
+            <QuestionNumSelection setApiRequest={setApiRequest} setStage={setStage}>20</QuestionNumSelection>
           </div>
         </div>
       </div>
