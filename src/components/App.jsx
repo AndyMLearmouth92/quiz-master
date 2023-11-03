@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
-import NumOfQuestions from "./NumOfQuestions"
+import { useState, useEffect, useRef } from "react";
+import NumOfQuestions from "./NumOfQuestions";
 import QAContainer from "./QAContainer";
 import Result from "./Result";
 
@@ -8,10 +8,13 @@ function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
   const [quiz, setQuiz] = useState([]);
-  const [stage, setStage] = useState(1)
-  const [apiRequest, setApiRequest] = useState(10)
+  const [stage, setStage] = useState(1);
+  const [apiRequest, setApiRequest] = useState(10);
+  const [userAnswers, setUserAnswers] = useState([]);
   const currentQuestion = quiz[questionNumber];
-  
+
+  console.log(userAnswers);
+
   useEffect(() => {
     function getQuestions() {
       fetch(`https://quiz-master-data.cyclic.cloud/questions/${apiRequest}`)
@@ -28,8 +31,8 @@ function App() {
 
   //Sets stage to 3
   useEffect(() => {
-    if(quiz.length > 0 && questionNumber === quiz.length){
-      setStage(3)
+    if (quiz.length > 0 && questionNumber === quiz.length) {
+      setStage(3);
     }
   }, [questionNumber]);
 
@@ -43,7 +46,10 @@ function App() {
         <div className="hero-content text-center text-neutral-content min-h-full min-w-full">
           <div className="max-w-xl">
             {stage === 1 && (
-            <NumOfQuestions setApiRequest={setApiRequest} setStage={setStage}/>
+              <NumOfQuestions
+                setApiRequest={setApiRequest}
+                setStage={setStage}
+              />
             )}
             {stage === 2 && currentQuestion && (
               <QAContainer
@@ -55,10 +61,15 @@ function App() {
                 numCorrectAnswers={numCorrectAnswers}
                 answerOptions={currentQuestion.answerOptions}
                 quizLength={quiz.length}
+                setUserAnswers={setUserAnswers}
               />
             )}
             {stage === 3 && (
-              <Result numCorrectAnswers={numCorrectAnswers} quiz={quiz} />
+              <Result
+                numCorrectAnswers={numCorrectAnswers}
+                quiz={quiz}
+                userAnswers={userAnswers}
+              />
             )}
           </div>
         </div>
@@ -66,6 +77,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
