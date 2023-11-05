@@ -6,6 +6,8 @@ export default function QuestionOutcome({
   questionNumber,
   answerOptions,
   quizLength,
+  stage,
+  currentUserAnswer,
 }) {
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl h-3/5 flex bg-slate-600">
@@ -17,12 +19,14 @@ export default function QuestionOutcome({
         />
         <div className="justify-center ">
           <div className="">
-            {answerOptions.map((answer) => {
+            {answerOptions.map((answer, i) => {
               return (
                 <AnswerButton
                   answer={answer}
                   key={answer.answerText}
-                  handleClick={console.log("click")}
+                  stage={stage}
+                  currentUserAnswer={currentUserAnswer}
+                  handleClick={() => console.log(currentUserAnswer)}
                 />
               );
             })}

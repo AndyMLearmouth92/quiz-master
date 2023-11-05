@@ -13,7 +13,7 @@ function App() {
   const [userAnswers, setUserAnswers] = useState([]);
   const currentQuestion = quiz[questionNumber];
 
-  console.log(userAnswers);
+  // console.log(userAnswers);
 
   useEffect(() => {
     function getQuestions() {
@@ -69,6 +69,7 @@ function App() {
                 numCorrectAnswers={numCorrectAnswers}
                 quiz={quiz}
                 userAnswers={userAnswers}
+                stage={stage}
               />
             )}
           </div>

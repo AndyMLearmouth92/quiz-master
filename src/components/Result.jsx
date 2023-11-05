@@ -1,7 +1,12 @@
 import { useState } from "react";
 import QuestionOutcome from "./QuestionOutcome";
 
-export default function Result({ numCorrectAnswers, quiz, userAnswers }) {
+export default function Result({
+  numCorrectAnswers,
+  quiz,
+  userAnswers,
+  stage,
+}) {
   const [selectedQuestion, setSelectedQuestion] = useState(0);
 
   let resultMessage = "";
@@ -57,6 +62,8 @@ export default function Result({ numCorrectAnswers, quiz, userAnswers }) {
                   questionNumber={selectedQuestion}
                   answerOptions={quiz[selectedQuestion].answerOptions}
                   quizLength={quiz.length}
+                  currentUserAnswer={userAnswers[selectedQuestion]}
+                  stage={stage}
                 />
               </h3>
               <p className="py-4">
