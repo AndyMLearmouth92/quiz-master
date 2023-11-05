@@ -26,17 +26,18 @@ export default function Result({
   }
 
   return (
-    <div className="card lg:card-side bg-base-100 shadow-xl h-80 flex bg-slate-600">
+    <div className="card lg:card-side bg-base-100 shadow-xl h-80 bg-slate-600">
       <div className="card-body flex">
         <h1 className="text-5xl mb-8">
           {resultMessage} {numCorrectAnswers} / {quiz.length}!
         </h1>
+
         <div>
-          {quiz.map((_, i) => {
-            return (
-              <div>
+          <div>
+            {quiz.map((_, i) => {
+              return (
                 <button
-                  className="btn btn-neutral btn-primary m-2 btn-answer text-xl"
+                  className="btn btn-neutral btn-primary m-2 btn-answer text-xl w-12"
                   onClick={() => {
                     console.log(i, quiz[i]);
                     setSelectedQuestion(i);
@@ -48,12 +49,11 @@ export default function Result({
                       : { backgroundColor: "red" }
                   }
                 >
-                  Question {i + 1}
+                  Q{i + 1}
                 </button>
-              </div>
-            );
-          })}
-
+              );
+            })}
+          </div>
           <dialog id="my_modal_1" className="modal">
             <div className="modal-box">
               <h3 className="font-bold text-lg">
