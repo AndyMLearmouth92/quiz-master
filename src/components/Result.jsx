@@ -26,7 +26,7 @@ export default function Result({
   }
 
   return (
-    <div className="card lg:card-side bg-base-100 shadow-xl h-80 bg-slate-600">
+    <div className="card lg:card-side bg-base-100 shadow-xl h-5/6 bg-slate-600">
       <div className="card-body flex">
         <h1 className="text-5xl mb-8">
           {resultMessage} {numCorrectAnswers} / {quiz.length}!
