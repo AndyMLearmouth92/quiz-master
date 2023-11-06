@@ -7,13 +7,13 @@ export default function AnswerButton({
   // Conditional to set the style / colour coding of the buttons to show the correct answer and the user's answers.
   let style = {};
   if (stage === 3 && answer.isCorrect) {
-    style = { backgroundColor: "green" };
+    style = { backgroundColor: "#267326" };
   } else if (
     stage === 3 &&
     !currentUserAnswer.isCorrect &&
     answer === currentUserAnswer
   ) {
-    style = { backgroundColor: "red" };
+    style = { backgroundColor: "#b30000" };
   }
 
   return (

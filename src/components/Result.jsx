@@ -37,7 +37,7 @@ export default function Result({
             {quiz.map((_, i) => {
               return (
                 <button
-                  className="btn btn-neutral btn-primary m-2 btn-answer text-xl w-12"
+                  className="btn btn-neutral btn-primary m-2 btn-answer text-xl w-1/6"
                   onClick={() => {
                     console.log(i, quiz[i]);
                     setSelectedQuestion(i);
@@ -45,8 +45,8 @@ export default function Result({
                   }}
                   style={
                     userAnswers[i].isCorrect === true
-                      ? { backgroundColor: "green" }
-                      : { backgroundColor: "red" }
+                      ? { backgroundColor: "#267326" }
+                      : { backgroundColor: "#b30000" }
                   }
                 >
                   Q{i + 1}
