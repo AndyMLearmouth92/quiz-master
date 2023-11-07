@@ -55,7 +55,7 @@ export default function Result({
             })}
           </div>
           <dialog id="my_modal_1" className="modal">
-            <div className="modal-box">
+            <div className="modal-box bg-slate-700 min-w-[40%]">
               <h3 className="font-bold text-lg">
                 <QuestionOutcome
                   currentQuestion={quiz[selectedQuestion]}
@@ -66,12 +66,11 @@ export default function Result({
                   stage={stage}
                 />
               </h3>
-              <p className="py-4">
-                Press ESC key or click the button below to close
-              </p>
               <div className="modal-action">
                 <form method="dialog">
-                  <button className="btn">Close</button>
+                  <button className="btn btn-neutral btn-primary m-2 btn-answer text-xl">
+                    Close
+                  </button>
                 </form>
               </div>
             </div>
