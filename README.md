@@ -37,6 +37,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 I would also like to store the users scores in local storage and provide the option to share their result with their friends on social media.
 
+I need to stop the button from changing size and colour when the user hovers over it when they have finished the quiz. At the moment, it looks like they can click the button but it will not do anything.
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
